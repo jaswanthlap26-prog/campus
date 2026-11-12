@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Faculty</title>
+    <style>
+        *{box-sizing:border-box}
+        body{font-family:Arial,sans-serif;background:#f4f6fb;margin:0;padding:30px;color:#1e293b}
+        .container{max-width:1200px;margin:auto;background:white;padding:25px;border-radius:12px}
+        .top{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+        .btn,button{border:0;background:#2563eb;color:white;padding:11px 16px;border-radius:7px;text-decoration:none;cursor:pointer}
+        .back{display:inline-block;margin-bottom:20px;color:#2563eb;text-decoration:none}
+        form.search{display:flex;gap:8px;margin:22px 0}
+        input{padding:11px;border:1px solid #cbd5e1;border-radius:7px;min-width:220px}
+        .table-wrap{overflow-x:auto}
+        table{width:100%;border-collapse:collapse;min-width:850px}
+        th,td{text-align:left;padding:13px;border-bottom:1px solid #e2e8f0}
+        th{background:#eff6ff}
+        .edit{color:#2563eb;text-decoration:none}
+        .delete{background:#dc2626;padding:8px 10px}
+        .empty{padding:25px;text-align:center;color:#64748b}
+    </style>
+</head>
+<body>
+<div class="container">
+    <a class="back" href="{{ url_for('operator_dashboard') }}">← Back to Dashboard</a>
+
+    <div class="top">
+        <h1>Faculty Records</h1>
+        <a class="btn" href="{{ url_for('operator_add_faculty') }}">+ Add Faculty</a>
+    </div>
+
+    {% if request.args.get('error') == 'delete_failed' %}
+        <p style="color:#dc2626;margin-top:15px">Faculty record could not be deleted. This faculty member may have related records.</p>
+    {% endif %}
+
+    <form class="search" method="GET">
+        <input type="text" name="q" value="{{ search }}" placeholder="Search faculty name, code, email or department">
+        <button type="submit">Search</button>
+        <a class="btn" href="{{ url_for('operator_faculty') }}">Clear</a>
+    </form>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Faculty Code</th>
+                    <th>Faculty No.</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Degrees</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for f in faculty_members %}
+                <tr>
+                    <td>{{ f.faculty_code }}</td>
+                    <td>{{ f.faculty_no }}</td>
+                    <td>{{ f.faculty_name }}</td>
+                    <td>{{ f.dept_name or '-' }}</td>
+                    <td>{{ f.designation }}</td>
+                    <td>{{ f.degrees or '-' }}</td>
+                    <td>{{ f.mobile_number or '-' }}</td>
+                    <td>{{ f.email }}</td>
+                    <td>
+                        <a class="edit" href="{{ url_for('operator_edit_faculty', faculty_id=f.faculty_id) }}">Edit</a>
+                        <form method="POST" action="{{ url_for('operator_delete_faculty', faculty_id=f.faculty_id) }}" style="display:inline" onsubmit="return confirm('Delete this faculty record?')">
+                            <button class="delete" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="9" class="empty">No faculty records found.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

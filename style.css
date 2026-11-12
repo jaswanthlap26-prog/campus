@@ -1,0 +1,965 @@
+/* =====================================================
+   CAMPUS CONNECT
+   PREMIUM EDUCATION PORTAL
+   COMPLETE STYLE.CSS
+   ===================================================== */
+
+:root {
+    --theme: #7c6cf2;
+    --theme-light: #eeeaff;
+    --background: #f7f8fc;
+    --text: #25263a;
+    --muted: #85889c;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--background);
+    color: var(--text);
+}
+
+button, input, select {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* =====================================================
+   DASHBOARD LAYOUT
+   ===================================================== */
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 255px;
+    background: white;
+    padding: 25px 18px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #eeeeF5;
+    flex-shrink: 0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 42px;
+}
+
+.brand-logo {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, #9183ff, #6554d9);
+    color: white;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.brand h2 {
+    font-size: 16px;
+}
+
+.brand span {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.menu-heading {
+    font-size: 10px;
+    font-weight: 700;
+    color: #a3a4b4;
+    letter-spacing: 1.2px;
+    margin: 0 0 15px 10px;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #77798d;
+    padding: 13px 12px;
+    border-radius: 11px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: var(--theme-light);
+    color: var(--theme);
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.help-card {
+    background: #f2efff;
+    padding: 17px;
+    border-radius: 15px;
+    margin: 25px 0 15px;
+}
+
+.help-card span {
+    font-size: 23px;
+}
+
+.help-card h4 {
+    margin: 8px 0 5px;
+    font-size: 13px;
+}
+
+.help-card p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* =====================================================
+   MAIN CONTENT AND TOPBAR
+   ===================================================== */
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 28px 35px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 27px;
+}
+
+.topbar h2 {
+    font-size: 23px;
+}
+
+.topbar p {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.icon-button {
+    border: none;
+    background: white;
+    padding: 11px;
+    border-radius: 12px;
+    font-size: 18px;
+}
+
+.profile-mini {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-mini strong {
+    display: block;
+    font-size: 12px;
+}
+
+.profile-mini small {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #ffcfdd, #b6a9ff);
+    color: #4b3c8d;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+/* =====================================================
+   WELCOME BANNER
+   ===================================================== */
+
+.welcome-banner {
+    min-height: 230px;
+    padding: 32px 40px;
+    border-radius: 23px;
+    background: linear-gradient(110deg, #eeeaff, #f9e9f5, #e7f1ff);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.welcome-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #7564d7;
+}
+
+.welcome-banner h1 {
+    font-size: clamp(25px, 3vw, 36px);
+    line-height: 1.25;
+    margin: 13px 0;
+}
+
+.welcome-banner p {
+    color: #77778c;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.primary-button {
+    background: var(--theme);
+    color: white;
+    border: none;
+    padding: 12px 19px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 11px;
+    transition: 0.2s;
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.95);
+}
+
+.welcome-art {
+    width: 210px;
+    height: 180px;
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+.art-circle {
+    width: 140px;
+    height: 140px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 65px;
+}
+
+.art-star {
+    position: absolute;
+    color: #947fe9;
+    font-size: 32px;
+}
+
+.star-one {
+    top: 10px;
+    right: 10px;
+}
+
+.star-two {
+    bottom: 10px;
+    left: 15px;
+}
+
+.art-book {
+    position: absolute;
+    right: 0;
+    bottom: 12px;
+    font-size: 35px;
+}
+
+/* =====================================================
+   SECTION HEADINGS
+   ===================================================== */
+
+.section-block {
+    margin-top: 32px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 17px;
+}
+
+.section-heading h2 {
+    font-size: 17px;
+}
+
+.section-heading p {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+/* =====================================================
+   BRANCH CARDS
+   ===================================================== */
+
+.branch-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 13px;
+}
+
+.branch-card {
+    border: 1px solid transparent;
+    border-radius: 15px;
+    padding: 17px 10px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    transition: 0.25s;
+}
+
+.branch-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(40,40,80,0.08);
+}
+
+.branch-card span {
+    font-size: 25px;
+}
+
+.branch-card strong {
+    font-size: 13px;
+}
+
+.branch-card small {
+    font-size: 9px;
+    line-height: 1.4;
+}
+
+.cse {
+    background: #e6efff;
+    color: #2563eb;
+}
+
+.aiml {
+    background: #f0eaff;
+    color: #7c3aed;
+}
+
+.ds {
+    background: #dff8f3;
+    color: #0f8b79;
+}
+
+.cyber {
+    background: #ffe9e9;
+    color: #dc2626;
+}
+
+.iot {
+    background: #fff3dc;
+    color: #c47a0b;
+}
+
+/* =====================================================
+   STATISTICS CARDS
+   ===================================================== */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 3px 14px rgba(30,30,70,0.025);
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 19px;
+    margin-bottom: 13px;
+}
+
+.stat-card p {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.stat-card h2 {
+    font-size: 26px;
+    margin: 5px 0;
+}
+
+.stat-card small {
+    color: #999bad;
+    font-size: 10px;
+}
+
+.purple { background: #f0eaff; }
+.blue { background: #e7efff; }
+.green { background: #e3f8ed; }
+.orange { background: #fff1df; }
+
+/* =====================================================
+   CAMPUS MAP
+   ===================================================== */
+
+.live-label {
+    color: #159b6c;
+    font-size: 10px;
+    font-weight: 700;
+    background: #e7f8ef;
+    padding: 8px 12px;
+    border-radius: 20px;
+}
+
+.campus-map {
+    background: linear-gradient(135deg, #edf8f0, #eaf2ff);
+    border-radius: 20px;
+    padding: 25px;
+    overflow: hidden;
+    position: relative;
+}
+
+.campus-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.campus-title > span {
+    background: white;
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    font-size: 23px;
+}
+
+.campus-title h3 {
+    font-size: 15px;
+}
+
+.campus-title p {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.building-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.building {
+    min-height: 115px;
+    border: 2px solid rgba(255,255,255,0.9);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    box-shadow: 0 5px 12px rgba(30,50,50,0.06);
+    transition: 0.2s;
+}
+
+.building:hover {
+    transform: scale(1.04);
+}
+
+.building span {
+    font-size: 27px;
+}
+
+.building strong {
+    font-size: 11px;
+}
+
+.building small {
+    font-size: 9px;
+    opacity: 0.75;
+}
+
+.building-blue { background: #dceaff; color: #2563eb; }
+.building-purple { background: #eee4ff; color: #7c3aed; }
+.building-teal { background: #d8f7ef; color: #0f8b79; }
+.building-red { background: #ffe0e0; color: #dc2626; }
+.building-orange { background: #fff0d8; color: #c47a0b; }
+.building-yellow { background: #fff5ce; color: #9a7210; }
+.building-green { background: #dcf5df; color: #218447; }
+.building-pink { background: #ffe5f1; color: #c13f85; }
+
+.campus-footer {
+    text-align: center;
+    font-size: 10px;
+    color: #64836f;
+    margin-top: 23px;
+}
+
+/* =====================================================
+   QUICK ACCESS AND ANNOUNCEMENTS
+   ===================================================== */
+
+.bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 27px;
+}
+
+.content-card {
+    background: white;
+    padding: 22px;
+    border-radius: 17px;
+}
+
+.quick-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quick-links a {
+    padding: 12px;
+    background: #f8f8fc;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #65677b;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.quick-links a:hover {
+    background: var(--theme-light);
+    color: var(--theme);
+}
+
+.announcement {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f4;
+}
+
+.announcement-icon {
+    font-size: 22px;
+}
+
+.announcement strong {
+    font-size: 11px;
+}
+
+.announcement p {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 5px;
+    line-height: 1.5;
+}
+
+footer {
+    text-align: center;
+    padding: 25px 0 5px;
+    color: #a0a1b0;
+    font-size: 10px;
+}
+
+/* =====================================================
+   BRANCH THEME SWITCHING
+   ===================================================== */
+
+body.theme-cse {
+    --theme: #2563eb;
+    --theme-light: #e6efff;
+}
+
+body.theme-aiml {
+    --theme: #7c3aed;
+    --theme-light: #f0eaff;
+}
+
+body.theme-ds {
+    --theme: #0f8b79;
+    --theme-light: #dff8f3;
+}
+
+body.theme-cyber {
+    --theme: #dc2626;
+    --theme-light: #ffe9e9;
+}
+
+body.theme-iot {
+    --theme: #c47a0b;
+    --theme-light: #fff3dc;
+}
+
+/* =====================================================
+   LOGIN PAGE
+   ===================================================== */
+
+.login-body {
+    min-height: 100vh;
+    background: #f5f4fc;
+    display: grid;
+    place-items: center;
+    padding: 25px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 1050px;
+    min-height: 620px;
+    background: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(50,40,100,0.10);
+}
+
+.login-left {
+    padding: 45px;
+    background: linear-gradient(145deg, #e9e5ff, #fceafa, #e5f1ff);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.login-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-brand h2 {
+    font-size: 19px;
+}
+
+.login-illustration {
+    height: 210px;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.illustration-circle {
+    width: 150px;
+    height: 150px;
+    background: rgba(255,255,255,0.75);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 75px;
+}
+
+.floating-icon {
+    position: absolute;
+    font-size: 30px;
+}
+
+.icon-one {
+    top: 25px;
+    left: 20%;
+}
+
+.icon-two {
+    right: 15%;
+    top: 50px;
+}
+
+.icon-three {
+    right: 25%;
+    bottom: 10px;
+}
+
+.login-left h1 {
+    font-size: 34px;
+    line-height: 1.3;
+    margin-bottom: 15px;
+}
+
+.login-left > p {
+    color: #77778c;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.login-features {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+    color: #6456b4;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.login-right {
+    display: grid;
+    place-items: center;
+    padding: 35px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 360px;
+}
+
+.login-avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #eeeaff;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.login-card h2 {
+    font-size: 27px;
+}
+
+.login-subtitle {
+    color: #9293a4;
+    font-size: 12px;
+    margin: 9px 0 25px;
+}
+
+.login-card label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 17px 0 8px;
+}
+
+.login-card input,
+.login-card select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #e6e5ef;
+    border-radius: 10px;
+    outline: none;
+    background: #fafaff;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.login-card input:focus,
+.login-card select:focus {
+    border-color: #8171e8;
+}
+
+.login-button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(110deg, #8d7af1, #6957d8);
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    opacity: 0.9;
+}
+
+.login-footer {
+    text-align: center;
+    color: #a1a1b1;
+    font-size: 10px;
+    line-height: 1.8;
+    margin-top: 30px;
+}
+
+.login-error {
+    padding: 12px;
+    background: #ffe8e8;
+    color: #c62828;
+    border-radius: 9px;
+    font-size: 12px;
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN
+   ===================================================== */
+
+@media (max-width: 1050px) {
+
+    .sidebar {
+        width: 210px;
+    }
+
+    .main-content {
+        padding: 22px;
+    }
+
+    .branch-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .building-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 750px) {
+
+    .login-container {
+        grid-template-columns: 1fr;
+    }
+
+    .login-left {
+        padding: 30px;
+    }
+
+    .login-illustration {
+        height: 130px;
+    }
+
+    .illustration-circle {
+        width: 100px;
+        height: 100px;
+        font-size: 50px;
+    }
+
+    .login-left h1 {
+        font-size: 26px;
+    }
+
+    .login-right {
+        padding: 35px 25px;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .app-container {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .brand {
+        margin-bottom: 15px;
+    }
+
+    .navigation {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sidebar-bottom {
+        display: none;
+    }
+
+    .main-content {
+        padding: 17px;
+    }
+
+    .topbar h2 {
+        font-size: 19px;
+    }
+
+    .welcome-banner {
+        padding: 25px;
+    }
+
+    .welcome-art {
+        width: 100px;
+    }
+
+    .art-circle {
+        width: 90px;
+        height: 90px;
+        font-size: 40px;
+    }
+
+    .branch-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .campus-map {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .profile-mini {
+        display: none;
+    }
+
+    .building-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+    }
+
+    .building {
+        min-height: 100px;
+    }
+
+    .welcome-art {
+        display: none;
+    }
+}

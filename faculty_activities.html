@@ -1,0 +1,371 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+.faculty-activities {
+    padding: 10px 0 30px;
+    color: #172b4d;
+}
+
+.activities-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px;
+    margin-bottom: 28px;
+    border-radius: 18px;
+    background: linear-gradient(120deg, #142b55, #2456a6);
+    color: white;
+}
+
+.activities-banner h1 {
+    color: white;
+    font-size: 28px;
+    margin: 12px 0 8px;
+}
+
+.activities-banner p {
+    color: #dce8ff;
+    font-size: 14px;
+    margin: 0;
+}
+
+.activities-label {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.14);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.activities-banner-icon {
+    width: 78px;
+    height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: rgba(255,255,255,.15);
+    font-size: 38px;
+}
+
+.activities-heading {
+    margin: 28px 0 18px;
+}
+
+.activities-heading h2 {
+    font-size: 21px;
+    font-weight: 800;
+    margin: 0 0 6px;
+}
+
+.activities-heading p {
+    color: #7b8799;
+    font-size: 13px;
+    margin: 0;
+}
+
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.activity-card {
+    overflow: hidden;
+    background: white;
+    border: 1px solid #e8edf5;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(20,40,80,.04);
+    transition: .25s ease;
+}
+
+.activity-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(20,40,80,.09);
+}
+
+.activity-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 22px;
+    background: #f7f9fd;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.activity-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: #eaf1ff;
+    font-size: 23px;
+}
+
+.activity-category {
+    display: inline-block;
+    max-width: 70%;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #edf3ff;
+    color: #2456a6;
+    font-size: 11px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+    text-align: center;
+}
+
+.activity-card-body {
+    padding: 23px;
+}
+
+.activity-card-body h3 {
+    font-size: 17px;
+    font-weight: 800;
+    color: #172b4d;
+    margin: 0 0 11px;
+    overflow-wrap: anywhere;
+}
+
+.activity-description {
+    color: #78869b;
+    font-size: 13px;
+    line-height: 1.8;
+    margin: 0 0 20px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.activity-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 13px;
+    padding-top: 17px;
+    border-top: 1px solid #edf0f5;
+}
+
+.activity-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+}
+
+.detail-icon {
+    font-size: 17px;
+}
+
+.detail-info span {
+    display: block;
+    color: #929db0;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    margin-bottom: 5px;
+}
+
+.detail-info strong {
+    display: block;
+    color: #34445f;
+    font-size: 12px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.empty-activities {
+    grid-column: 1 / -1;
+    background: white;
+    border: 1px dashed #cbd5e1;
+    border-radius: 15px;
+    padding: 45px 20px;
+    text-align: center;
+}
+
+.empty-activities .empty-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.empty-activities h3 {
+    font-size: 17px;
+    color: #34445f;
+    margin: 0 0 8px;
+}
+
+.empty-activities p {
+    color: #8290a4;
+    font-size: 13px;
+    margin: 0;
+}
+
+@media(max-width:750px) {
+    .activities-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .activities-banner {
+        padding: 24px 20px;
+    }
+
+    .activities-banner h1 {
+        font-size: 23px;
+    }
+
+    .activities-banner-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+    }
+}
+
+@media(max-width:400px) {
+    .activity-details {
+        grid-template-columns: 1fr;
+    }
+
+    .activities-banner-icon {
+        display: none;
+    }
+}
+</style>
+
+<div class="faculty-activities">
+
+    <!-- HEADER -->
+
+    <section class="activities-banner">
+
+        <div>
+            <span class="activities-label">FACULTY PORTAL</span>
+            <h1>Campus Activities</h1>
+            <p>Explore college events, programs and campus activities.</p>
+        </div>
+
+        <div class="activities-banner-icon">
+            📅
+        </div>
+
+    </section>
+
+
+    <!-- ACTIVITIES LIST -->
+
+    <div class="activities-heading">
+        <h2>College Events</h2>
+        <p>Explore the activities organized across your campus.</p>
+    </div>
+
+
+    <section class="activities-grid">
+
+        {% for activity in activities %}
+
+        <article class="activity-card">
+
+            <div class="activity-card-top">
+
+                <div class="activity-icon">
+                    📅
+                </div>
+
+                <span class="activity-category">
+                    {{ activity.category or 'General' }}
+                </span>
+
+            </div>
+
+
+            <div class="activity-card-body">
+
+                <h3>{{ activity.event_name }}</h3>
+
+                <p class="activity-description">
+                    {{ activity.description or 'No description available.' }}
+                </p>
+
+
+                <div class="activity-details">
+
+                    <div class="activity-detail">
+
+                        <span class="detail-icon">📆</span>
+
+                        <div class="detail-info">
+                            <span>Event Date</span>
+                            <strong>{{ activity.event_date }}</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-detail">
+
+                        <span class="detail-icon">🕒</span>
+
+                        <div class="detail-info">
+                            <span>Event Time</span>
+                            <strong>{{ activity.event_time or 'Not specified' }}</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-detail">
+
+                        <span class="detail-icon">📍</span>
+
+                        <div class="detail-info">
+                            <span>Venue</span>
+                            <strong>{{ activity.venue or 'Not specified' }}</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-detail">
+
+                        <span class="detail-icon">🏷️</span>
+
+                        <div class="detail-info">
+                            <span>Category</span>
+                            <strong>{{ activity.category or 'General' }}</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        {% else %}
+
+        <div class="empty-activities">
+
+            <div class="empty-icon">📭</div>
+
+            <h3>No Activities Available</h3>
+
+            <p>
+                There are currently no active campus activities.
+                Please check again later.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </section>
+
+</div>
+
+{% endblock %}

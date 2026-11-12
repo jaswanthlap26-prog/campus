@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Campus Connect | {{ page_title }}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-logo">CC</div>
+            <div>
+                <h2>Campus Connect</h2>
+                <span>Your Campus, Connected</span>
+            </div>
+        </div>
+
+        <div class="sidebar-user">
+            <div class="user-avatar">
+                {{ session.get('username', 'U')[0]|upper }}
+            </div>
+
+            <div class="user-info">
+                <h4>{{ session.get('username', 'User') }}</h4>
+                <span>{{ session.get('role', 'USER').replace('_', ' ') }}</span>
+            </div>
+        </div>
+
+        <!-- SIDEBAR NAVIGATION -->
+        <nav class="sidebar-nav">
+
+            <p class="nav-heading">WORKSPACE</p>
+
+            {% for item in nav_items %}
+            <a href="{{ item.url }}"
+               class="nav-link {% if active_page == item.id %}active{% endif %}">
+
+                <span class="nav-icon">{{ item.icon }}</span>
+                <span>{{ item.label }}</span>
+
+            </a>
+            {% endfor %}
+
+        </nav>
+
+        <!-- SIDEBAR BOTTOM -->
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-help">
+                <span>Need assistance?</span>
+                <small>Contact campus support</small>
+            </div>
+
+            <a href="{{ url_for('logout') }}" class="logout-link">
+                <span>↪</span> Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <button class="menu-toggle"
+                    type="button"
+                    onclick="toggleSidebar()"
+                    aria-label="Toggle navigation">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                <h2>{{ page_title }}</h2>
+                <p>Your digital campus experience</p>
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    {{ session.get('username', 'U')[0]|upper }}
+                </div>
+
+                <div class="topbar-user-info">
+                    <strong>{{ session.get('username', 'User') }}</strong>
+                    <span>{{ session.get('role', 'USER').replace('_', ' ') }}</span>
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- PAGE CONTENT -->
+        <section class="page-content">
+
+            {% block content %}{% endblock %}
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+            © 2026 Campus Connect. All rights reserved.
+            <span>Connecting Campus, Empowering Students.</span>
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <style>
+        *{box-sizing:border-box}
+        body{font-family:Arial,sans-serif;background:#f4f6fb;padding:30px;color:#1e293b}
+        .container{max-width:750px;margin:auto;background:white;padding:30px;border-radius:12px}
+        a{color:#2563eb;text-decoration:none}
+        h1{margin:18px 0}
+        .grid{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+        label{display:block;font-weight:bold;margin-bottom:7px}
+        input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:7px}
+        .field{margin-bottom:17px}
+        button{background:#2563eb;color:white;border:0;padding:13px 22px;border-radius:7px;cursor:pointer}
+        .error{color:#dc2626;margin-bottom:15px}
+        @media(max-width:600px){.grid{grid-template-columns:1fr}body{padding:12px}}
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="{{ url_for('operator_students') }}">← Back to Students</a>
+    <h1>{% if student.get('student_id') %}Edit Student{% else %}Add Student{% endif %}</h1>
+
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+    <form method="POST">
+        <div class="grid">
+            <div class="field">
+                <label>Student Code *</label>
+                <input name="student_code" required value="{{ request.form.get('student_code', student.get('student_code', '')) }}">
+            </div>
+            <div class="field">
+                <label>Roll Number *</label>
+                <input name="roll_number" required value="{{ request.form.get('roll_number', student.get('roll_number', '')) }}">
+            </div>
+            <div class="field">
+                <label>Student Name *</label>
+                <input name="student_name" required value="{{ request.form.get('student_name', student.get('student_name', '')) }}">
+            </div>
+            <div class="field">
+                <label>Mobile Number</label>
+                <input name="mobile_number" value="{{ request.form.get('mobile_number', student.get('mobile_number', '')) }}">
+            </div>
+            <div class="field">
+                <label>Year of Study *</label>
+                <input type="number" min="1" max="6" name="year_of_study" required value="{{ request.form.get('year_of_study', student.get('year_of_study', '')) }}">
+            </div>
+            <div class="field">
+                <label>Semester *</label>
+                <input type="number" min="1" max="12" name="semester" required value="{{ request.form.get('semester', student.get('semester', '')) }}">
+            </div>
+            <div class="field">
+                <label>Department *</label>
+                <select name="dept_id" required>
+                    <option value="">Select Department</option>
+                    {% for d in departments %}
+                    <option value="{{ d.dept_id }}" {% if request.form.get('dept_id', student.get('dept_id', '')|string) == d.dept_id|string %}selected{% endif %}>
+                        {{ d.dept_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="field">
+                <label>Section</label>
+                <select name="section_id">
+                    <option value="">No Section</option>
+                    {% for sec in sections %}
+                    <option value="{{ sec.section_id }}" {% if request.form.get('section_id', student.get('section_id', '')|string) == sec.section_id|string %}selected{% endif %}>
+                        {{ sec.section_name }}{% if sec.academic_year %} - {{ sec.academic_year }}{% endif %}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type="submit">Save Student</button>
+    </form>
+</div>
+</body>
+</html>

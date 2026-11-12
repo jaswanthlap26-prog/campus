@@ -1,0 +1,45 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="welcome-banner">
+    <div>
+        <span class="eyebrow">HEAD OF DEPARTMENT</span>
+        <h1>Welcome, {{ session.username }}!</h1>
+        <p>Department overview and academic coordination.</p>
+    </div>
+    <div class="banner-icon">🏛️</div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card"><span>🏢</span><h3>Department</h3><p>Department overview</p></div>
+    <div class="stat-card"><span>👨‍🏫</span><h3>Faculty</h3><p>Faculty information</p></div>
+    <div class="stat-card"><span>🎓</span><h3>Students</h3><p>Student information</p></div>
+</div>
+
+<div class="section-heading" id="overview">
+    <h2>Department Workspace</h2>
+    <p>Manage your permitted department activities.</p>
+</div>
+
+<div class="content-grid">
+    <div class="content-card" id="department">
+        <h3>🏢 Department</h3>
+        <p>View department information.</p>
+    </div>
+    <div class="content-card" id="faculty">
+        <h3>👨‍🏫 Faculty</h3>
+        <p>Review department faculty information.</p>
+    </div>
+    <div class="content-card" id="students">
+        <h3>🎓 Students</h3>
+        <p>Review department student information.</p>
+    </div>
+    <div class="content-card" id="announcements">
+        <h3>📢 Announcements</h3>
+        <p>View department announcements.</p>
+    </div>
+</div>
+
+{% endblock %}

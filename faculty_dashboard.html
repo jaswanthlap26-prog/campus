@@ -1,0 +1,475 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+/* FACULTY DASHBOARD */
+
+.faculty-dashboard {
+    width: 100%;
+    padding: 10px 0 30px;
+    color: #172033;
+}
+
+/* WELCOME SECTION */
+
+.faculty-welcome {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 38px 40px;
+    margin-bottom: 30px;
+    border-radius: 18px;
+    background: linear-gradient(120deg, #142b55, #2456a6);
+    color: white;
+    box-shadow: 0 10px 30px rgba(25, 60, 120, 0.16);
+}
+
+.faculty-welcome::after {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    border: 35px solid rgba(255,255,255,0.07);
+    border-radius: 50%;
+    right: 80px;
+    top: -130px;
+}
+
+.welcome-text {
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-label {
+    display: inline-block;
+    padding: 7px 13px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.13);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 15px;
+}
+
+.faculty-welcome h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: white;
+}
+
+.faculty-welcome p {
+    margin: 6px 0;
+    color: #dce8ff;
+    font-size: 14px;
+}
+
+.welcome-icon {
+    position: relative;
+    z-index: 1;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 25px;
+    font-size: 48px;
+}
+
+/* SECTION HEADINGS */
+
+.dashboard-heading {
+    margin: 30px 0 18px;
+}
+
+.dashboard-heading h2 {
+    font-size: 21px;
+    font-weight: 800;
+    color: #172b4d;
+    margin: 0 0 6px;
+}
+
+.dashboard-heading p {
+    color: #718096;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* STATISTICS */
+
+.faculty-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.faculty-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding: 23px;
+    background: white;
+    border: 1px solid #e8edf5;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(20, 40, 80, 0.04);
+    transition: 0.25s ease;
+}
+
+.faculty-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(20, 40, 80, 0.09);
+}
+
+.stat-icon {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    font-size: 25px;
+}
+
+.stat-blue {
+    background: #eaf1ff;
+}
+
+.stat-purple {
+    background: #f0ebff;
+}
+
+.stat-orange {
+    background: #fff2e5;
+}
+
+.stat-info h3 {
+    margin: 0 0 5px;
+    font-size: 27px;
+    font-weight: 800;
+    color: #172b4d;
+}
+
+.stat-info p {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #7b8799;
+}
+
+/* WORKSPACE CARDS */
+
+.faculty-workspace {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.faculty-module {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 17px;
+    padding: 25px;
+    background: white;
+    border: 1px solid #e8edf5;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: 0.25s ease;
+    box-shadow: 0 4px 15px rgba(20, 40, 80, 0.035);
+}
+
+.faculty-module:hover {
+    transform: translateY(-4px);
+    border-color: #b9cdf5;
+    box-shadow: 0 12px 25px rgba(20, 40, 80, 0.08);
+}
+
+.module-icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
+    font-size: 24px;
+}
+
+.module-profile {
+    background: #eaf1ff;
+}
+
+.module-students {
+    background: #e7f8f1;
+}
+
+.module-announcements {
+    background: #fff1e7;
+}
+
+.module-activities {
+    background: #f0ebff;
+}
+
+.module-details {
+    flex: 1;
+}
+
+.module-details h3 {
+    color: #172b4d;
+    font-size: 16px;
+    font-weight: 800;
+    margin: 2px 0 8px;
+}
+
+.module-details p {
+    color: #78869b;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.module-arrow {
+    color: #8b9ab0;
+    font-size: 21px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.faculty-module:hover .module-arrow {
+    color: #2456a6;
+    transform: translateX(4px);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+    .faculty-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .faculty-welcome {
+        padding: 28px 22px;
+    }
+
+    .faculty-welcome h1 {
+        font-size: 23px;
+    }
+
+    .welcome-icon {
+        width: 65px;
+        height: 65px;
+        font-size: 32px;
+        border-radius: 18px;
+    }
+
+    .faculty-stats,
+    .faculty-workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .faculty-stat-card {
+        padding: 18px;
+    }
+
+    .faculty-module {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 380px) {
+    .welcome-icon {
+        display: none;
+    }
+}
+</style>
+
+<div class="faculty-dashboard">
+
+    <!-- WELCOME BANNER -->
+
+    <section class="faculty-welcome">
+
+        <div class="welcome-text">
+
+            <span class="welcome-label">
+                FACULTY PORTAL
+            </span>
+
+            <h1>
+                Welcome, {{ session.username }}!
+            </h1>
+
+            <p>
+                Your academic workspace at Campus Connect.
+            </p>
+
+            <p>
+                Department:
+                <strong>{{ faculty.department or 'Faculty Department' }}</strong>
+            </p>
+
+        </div>
+
+        <div class="welcome-icon">
+            👨‍🏫
+        </div>
+
+    </section>
+
+
+    <!-- STATISTICS -->
+
+    <div class="dashboard-heading">
+        <h2>Academic Overview</h2>
+        <p>Get a quick overview of your department activities.</p>
+    </div>
+
+    <section class="faculty-stats">
+
+        <div class="faculty-stat-card">
+
+            <div class="stat-icon stat-blue">
+                👨‍🎓
+            </div>
+
+            <div class="stat-info">
+                <h3>{{ faculty_stats.students or 0 }}</h3>
+                <p>Department Students</p>
+            </div>
+
+        </div>
+
+
+        <div class="faculty-stat-card">
+
+            <div class="stat-icon stat-purple">
+                📢
+            </div>
+
+            <div class="stat-info">
+                <h3>{{ faculty_stats.announcements or 0 }}</h3>
+                <p>My Announcements</p>
+            </div>
+
+        </div>
+
+
+        <div class="faculty-stat-card">
+
+            <div class="stat-icon stat-orange">
+                📅
+            </div>
+
+            <div class="stat-info">
+                <h3>{{ faculty_stats.activities or 0 }}</h3>
+                <p>Campus Activities</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FACULTY WORKSPACE -->
+
+    <div class="dashboard-heading">
+        <h2>Faculty Workspace</h2>
+        <p>Access your academic services and manage your activities.</p>
+    </div>
+
+    <section class="faculty-workspace">
+
+        <a href="{{ url_for('faculty_profile') }}"
+           class="faculty-module">
+
+            <div class="module-icon module-profile">
+                👤
+            </div>
+
+            <div class="module-details">
+                <h3>My Profile</h3>
+                <p>
+                    View your faculty information, department,
+                    designation and contact details.
+                </p>
+            </div>
+
+            <span class="module-arrow">›</span>
+
+        </a>
+
+
+        <a href="{{ url_for('faculty_students') }}"
+           class="faculty-module">
+
+            <div class="module-icon module-students">
+                👨‍🎓
+            </div>
+
+            <div class="module-details">
+                <h3>Students</h3>
+                <p>
+                    Search and view student records
+                    belonging to your department.
+                </p>
+            </div>
+
+            <span class="module-arrow">›</span>
+
+        </a>
+
+
+        <a href="{{ url_for('faculty_announcements') }}"
+           class="faculty-module">
+
+            <div class="module-icon module-announcements">
+                📢
+            </div>
+
+            <div class="module-details">
+                <h3>Announcements</h3>
+                <p>
+                    Publish academic announcements
+                    and communicate important updates.
+                </p>
+            </div>
+
+            <span class="module-arrow">›</span>
+
+        </a>
+
+
+        <a href="{{ url_for('faculty_activities') }}"
+           class="faculty-module">
+
+            <div class="module-icon module-activities">
+                📅
+            </div>
+
+            <div class="module-details">
+                <h3>Activities</h3>
+                <p>
+                    Explore upcoming and past
+                    campus events and activities.
+                </p>
+            </div>
+
+            <span class="module-arrow">›</span>
+
+        </a>
+
+    </section>
+
+</div>
+
+{% endblock %}

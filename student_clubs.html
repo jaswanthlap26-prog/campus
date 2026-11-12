@@ -1,0 +1,708 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="clubs-page">
+
+    <div class="clubs-header">
+        <div>
+            <span class="eyebrow">CAMPUS CONNECT / COMMUNITY</span>
+            <h1>Explore Clubs</h1>
+            <p>Discover your interests, connect with students and find your community.</p>
+        </div>
+
+        <div class="club-count">
+            <strong>{{ clubs|length }}</strong>
+            <span>Available Clubs</span>
+        </div>
+    </div>
+
+    {% if request.args.get('message') == 'joined' %}
+    <div class="notice success">
+        ✓ Your club membership has been updated successfully.
+    </div>
+    {% endif %}
+
+    <!-- MY CLUBS -->
+
+    <section class="my-clubs-section">
+
+        <div class="section-heading">
+            <div>
+                <h2>My Club Memberships</h2>
+                <p>Your primary and additional clubs</p>
+            </div>
+            <span class="membership-count">
+                {{ memberships|length }} Joined
+            </span>
+        </div>
+
+        {% if memberships %}
+
+        <div class="my-clubs-grid">
+
+            {% for membership in memberships %}
+
+            <div class="my-club-card">
+
+                <div class="my-club-icon">♧</div>
+
+                <div class="my-club-info">
+                    <h3>{{ membership.club_name }}</h3>
+                    <p>{{ membership.category or 'General Club' }}</p>
+
+                    {% if membership.membership_type == 'PRIMARY' %}
+                    <span class="primary-label">★ Primary Club</span>
+                    {% else %}
+                    <span class="additional-label">Additional Club</span>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="no-membership">
+            <div>♧</div>
+            <h3>You haven't joined any clubs yet</h3>
+            <p>Choose your primary club below to get started.</p>
+        </div>
+
+        {% endif %}
+
+    </section>
+
+    <!-- SEARCH AND FILTER -->
+
+    <section class="explore-section">
+
+        <div class="section-heading">
+            <div>
+                <h2>Discover Clubs</h2>
+                <p>Explore clubs available in your campus.</p>
+            </div>
+        </div>
+
+        <div class="club-controls">
+
+            <input
+                type="text"
+                id="clubSearch"
+                placeholder="Search club name..."
+                oninput="filterClubs()"
+            >
+
+            <select id="clubCategory" onchange="filterClubs()">
+                <option value="all">All Categories</option>
+                <option value="technical">Technical</option>
+                <option value="non-technical">Non-Technical</option>
+                <option value="arts">Arts</option>
+                <option value="cultural">Cultural</option>
+                <option value="sports">Sports</option>
+                <option value="literary">Literary</option>
+                <option value="robotics">Robotics</option>
+                <option value="entrepreneurship">Entrepreneurship</option>
+                <option value="social service">Social Service</option>
+                <option value="other">Other</option>
+            </select>
+
+        </div>
+
+        {% if clubs %}
+
+        <div class="clubs-grid" id="clubsGrid">
+
+            {% for club in clubs %}
+
+            <article class="club-card"
+                     data-name="{{ club.club_name|lower }}"
+                     data-category="{{ (club.category or 'Other')|lower }}">
+
+                <div class="club-card-top">
+
+                    <div class="club-avatar">
+                        {{ club.club_name[0]|upper }}
+                    </div>
+
+                    <span class="club-category">
+                        {{ club.category or 'General' }}
+                    </span>
+
+                </div>
+
+                <h3>{{ club.club_name }}</h3>
+
+                <span class="club-code">{{ club.club_code }}</span>
+
+                <p class="club-description">
+                    {{ club.description or 'More information about this club will be available soon.' }}
+                </p>
+
+                <div class="club-information">
+
+                    <div class="club-detail">
+                        <span>🏛️</span>
+                        <div>
+                            <small>Department</small>
+                            <strong>{{ club.dept_name or 'Not available' }}</strong>
+                        </div>
+                    </div>
+
+                    <div class="club-detail">
+                        <span>👨‍🏫</span>
+                        <div>
+                            <small>Faculty Coordinator ID</small>
+                            <strong>{{ club.coordinator_faculty_id }}</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="club-actions">
+
+                    {% if club.is_joined %}
+
+                        {% set ns = namespace(primary=false, additional=false) %}
+
+                        {% for membership in memberships %}
+                            {% if membership.club_id == club.club_id %}
+                                {% if membership.membership_type == 'PRIMARY' %}
+                                    {% set ns.primary = true %}
+                                {% else %}
+                                    {% set ns.additional = true %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if ns.primary %}
+
+                            <button class="club-button primary-button" disabled>
+                                ✓ Your Primary Club
+                            </button>
+
+                        {% else %}
+
+                            <form method="POST"
+                                  action="{{ url_for('student_club_join', club_id=club.club_id) }}">
+
+                                <input type="hidden"
+                                       name="membership_type"
+                                       value="PRIMARY">
+
+                                <button type="submit" class="club-button primary-button">
+                                    Make Primary Club
+                                </button>
+
+                            </form>
+
+                            <span class="joined-label">✓ Joined as Additional</span>
+
+                        {% endif %}
+
+                    {% else %}
+
+                        <form method="POST"
+                              action="{{ url_for('student_club_join', club_id=club.club_id) }}">
+
+                            <input type="hidden"
+                                   name="membership_type"
+                                   value="PRIMARY">
+
+                            <button type="submit" class="club-button primary-button">
+                                Choose as Primary
+                            </button>
+
+                        </form>
+
+                        <form method="POST"
+                              action="{{ url_for('student_club_join', club_id=club.club_id) }}">
+
+                            <input type="hidden"
+                                   name="membership_type"
+                                   value="ADDITIONAL">
+
+                            <button type="submit" class="club-button additional-button">
+                                Join as Additional
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+        <div id="noClubs" class="empty-state" style="display:none;">
+            <h3>No clubs found</h3>
+            <p>Try another club name or category.</p>
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+            <h3>No Clubs Available</h3>
+            <p>Clubs will appear here when they are added to Campus Connect.</p>
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+<style>
+
+.clubs-page {
+    padding: 28px;
+    max-width: 1200px;
+    margin: auto;
+    color: #1e293b;
+}
+
+.clubs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.eyebrow {
+    font-size: 11px;
+    color: #2563eb;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+}
+
+.clubs-header h1 {
+    font-size: 29px;
+    color: #172554;
+    margin: 8px 0;
+}
+
+.clubs-header p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+}
+
+.club-count {
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    border-radius: 12px;
+    padding: 14px 22px;
+    text-align: center;
+}
+
+.club-count strong,
+.club-count span {
+    display: block;
+}
+
+.club-count strong {
+    font-size: 26px;
+    color: #1d4ed8;
+}
+
+.club-count span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.notice {
+    padding: 13px 16px;
+    border-radius: 9px;
+    margin-bottom: 22px;
+    font-size: 14px;
+}
+
+.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* MY CLUBS */
+
+.my-clubs-section,
+.explore-section {
+    margin-bottom: 32px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.section-heading h2 {
+    font-size: 19px;
+    color: #1e293b;
+    margin: 0 0 5px;
+}
+
+.section-heading p {
+    color: #94a3b8;
+    font-size: 12px;
+    margin: 0;
+}
+
+.membership-count {
+    color: #2563eb;
+    background: #eff6ff;
+    border-radius: 20px;
+    padding: 7px 13px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.my-clubs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 15px;
+}
+
+.my-club-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 17px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: white;
+}
+
+.my-club-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    background: #eff6ff;
+    color: #2563eb;
+    border-radius: 12px;
+    font-size: 25px;
+}
+
+.my-club-info h3 {
+    font-size: 14px;
+    margin: 0 0 5px;
+}
+
+.my-club-info p {
+    color: #94a3b8;
+    font-size: 12px;
+    margin: 0 0 8px;
+}
+
+.primary-label,
+.additional-label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 5px 9px;
+    border-radius: 20px;
+}
+
+.primary-label {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.additional-label {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.no-membership {
+    background: white;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 35px 20px;
+    text-align: center;
+    color: #64748b;
+}
+
+.no-membership > div {
+    font-size: 35px;
+    color: #2563eb;
+}
+
+.no-membership h3 {
+    color: #334155;
+}
+
+/* SEARCH */
+
+.club-controls {
+    display: flex;
+    gap: 13px;
+    margin-bottom: 22px;
+}
+
+.club-controls input,
+.club-controls select {
+    border: 1px solid #dbe3ef;
+    background: white;
+    border-radius: 9px;
+    padding: 13px 15px;
+    font-size: 13px;
+    outline: none;
+}
+
+.club-controls input {
+    flex: 1;
+}
+
+.club-controls input:focus,
+.club-controls select:focus {
+    border-color: #2563eb;
+}
+
+/* CLUB CARDS */
+
+.clubs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 21px;
+}
+
+.club-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 15px;
+    padding: 21px;
+    box-shadow: 0 4px 14px rgba(15,23,42,.04);
+    transition: .2s;
+}
+
+.club-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(15,23,42,.08);
+}
+
+.club-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 17px;
+}
+
+.club-avatar {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.club-category {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.club-card h3 {
+    color: #1e293b;
+    font-size: 18px;
+    margin: 0 0 5px;
+}
+
+.club-code {
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.club-description {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 55px;
+    margin: 13px 0;
+}
+
+.club-information {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 14px;
+    margin-top: 14px;
+}
+
+.club-detail {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 13px;
+}
+
+.club-detail > span {
+    font-size: 18px;
+}
+
+.club-detail small {
+    display: block;
+    color: #94a3b8;
+    font-size: 10px;
+    margin-bottom: 4px;
+}
+
+.club-detail strong {
+    display: block;
+    color: #334155;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+/* BUTTONS */
+
+.club-actions {
+    display: grid;
+    gap: 9px;
+    margin-top: 17px;
+}
+
+.club-actions form {
+    width: 100%;
+}
+
+.club-button {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 11px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.primary-button {
+    background: #2563eb;
+    color: white;
+}
+
+.primary-button:hover {
+    background: #1d4ed8;
+}
+
+.additional-button {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.additional-button:hover {
+    background: #dbeafe;
+}
+
+.club-button:disabled {
+    background: #dcfce7;
+    color: #166534;
+    cursor: not-allowed;
+}
+
+.joined-label {
+    text-align: center;
+    color: #166534;
+    font-size: 11px;
+    padding: 6px;
+}
+
+/* EMPTY STATE */
+
+.empty-state {
+    text-align: center;
+    padding: 45px 20px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 13px;
+    color: #64748b;
+}
+
+.empty-state h3 {
+    color: #334155;
+}
+
+@media(max-width:650px) {
+
+    .clubs-page {
+        padding: 15px;
+    }
+
+    .clubs-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .club-controls {
+        flex-direction: column;
+    }
+
+    .club-controls select {
+        width: 100%;
+    }
+}
+
+</style>
+
+<script>
+
+function filterClubs() {
+
+    const search = document
+        .getElementById("clubSearch")
+        .value.toLowerCase().trim();
+
+    const category = document
+        .getElementById("clubCategory")
+        .value;
+
+    const cards = document.querySelectorAll(".club-card");
+
+    let visible = 0;
+
+    cards.forEach(function(card) {
+
+        const name = card.dataset.name;
+        const cardCategory = card.dataset.category;
+
+        const matchesName = name.includes(search);
+
+        const matchesCategory =
+            category === "all" || cardCategory === category;
+
+        if (matchesName && matchesCategory) {
+            card.style.display = "";
+            visible++;
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+
+    const noClubs = document.getElementById("noClubs");
+
+    if (noClubs) {
+        noClubs.style.display = visible === 0 ? "block" : "none";
+    }
+
+}
+
+</script>
+
+{% endblock %}

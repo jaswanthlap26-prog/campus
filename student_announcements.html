@@ -1,0 +1,339 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+/* FACULTY MESSAGES PAGE */
+
+.messages-page {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.messages-header {
+    background: linear-gradient(135deg, #243b80, #526de0);
+    color: white;
+    padding: 30px;
+    border-radius: 18px;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.messages-header h1 {
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.messages-header p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.messages-header .header-icon {
+    font-size: 45px;
+    background: rgba(255,255,255,0.15);
+    width: 75px;
+    height: 75px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.student-info-strip {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.info-item {
+    background: white;
+    border: 1px solid #e7eaf2;
+    border-radius: 12px;
+    padding: 13px 18px;
+    flex: 1;
+    min-width: 160px;
+}
+
+.info-item span {
+    display: block;
+    color: #7b8498;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.info-item strong {
+    color: #202b45;
+    font-size: 14px;
+}
+
+.messages-section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    gap: 12px;
+}
+
+.messages-section-title h2 {
+    font-size: 20px;
+    color: #202b45;
+}
+
+.message-count {
+    background: #e9edff;
+    color: #4056bd;
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.message-card {
+    background: white;
+    border: 1px solid #e8ebf2;
+    border-radius: 15px;
+    padding: 23px;
+    margin-bottom: 17px;
+    box-shadow: 0 4px 15px rgba(30, 45, 80, 0.04);
+    transition: 0.2s ease;
+}
+
+.message-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 24px rgba(30, 45, 80, 0.09);
+}
+
+.message-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.message-title {
+    color: #202b45;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.message-subject {
+    display: inline-block;
+    background: #edf1ff;
+    color: #4056bd;
+    padding: 6px 11px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.message-date {
+    color: #8992a5;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.message-body {
+    color: #566176;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+    padding-top: 15px;
+    border-top: 1px solid #edf0f5;
+}
+
+.message-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 13px;
+    border-top: 1px solid #f0f2f6;
+}
+
+.message-department {
+    color: #7b8498;
+    font-size: 12px;
+}
+
+.message-label {
+    color: #16845b;
+    background: #e7f8ef;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.empty-messages {
+    background: white;
+    border: 1px dashed #cbd2e2;
+    border-radius: 16px;
+    text-align: center;
+    padding: 55px 20px;
+}
+
+.empty-icon {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.empty-messages h3 {
+    color: #26334f;
+    font-size: 19px;
+    margin-bottom: 9px;
+}
+
+.empty-messages p {
+    color: #8790a3;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+    .messages-header {
+        padding: 22px;
+    }
+
+    .messages-header h1 {
+        font-size: 22px;
+    }
+
+    .message-card {
+        padding: 17px;
+    }
+
+    .message-top {
+        flex-direction: column;
+    }
+}
+</style>
+
+
+<div class="messages-page">
+
+    <!-- HEADER -->
+    <div class="messages-header">
+
+        <div>
+            <h1>Faculty Messages</h1>
+            <p>
+                Important instructions, academic updates and
+                announcements from your faculty.
+            </p>
+        </div>
+
+        <div class="header-icon">✉</div>
+
+    </div>
+
+
+    <!-- STUDENT INFORMATION -->
+    <div class="student-info-strip">
+
+        <div class="info-item">
+            <span>STUDENT</span>
+            <strong>{{ student.student_name }}</strong>
+        </div>
+
+        <div class="info-item">
+            <span>DEPARTMENT</span>
+            <strong>{{ student.dept_name or 'Not available' }}</strong>
+        </div>
+
+        <div class="info-item">
+            <span>ACADEMIC YEAR</span>
+            <strong>Year {{ student.year_of_study }}</strong>
+        </div>
+
+    </div>
+
+
+    <!-- MESSAGE SECTION -->
+    <div class="messages-section-title">
+
+        <h2>Latest Updates</h2>
+
+        <span class="message-count">
+            {{ announcements|length }} Messages
+        </span>
+
+    </div>
+
+
+    {% for a in announcements %}
+
+    <div class="message-card">
+
+        <div class="message-top">
+
+            <div>
+                <h3 class="message-title">
+                    {{ a.title }}
+                </h3>
+
+                <span class="message-subject">
+                    {{ a.subject_code }} · {{ a.subject_name }}
+                </span>
+            </div>
+
+            <span class="message-date">
+                {{ a.created_at.strftime('%d %b %Y, %I:%M %p')
+                   if a.created_at else '' }}
+            </span>
+
+        </div>
+
+
+        <div class="message-body">
+            {{ a.message }}
+        </div>
+
+
+        <div class="message-footer">
+
+            <span class="message-department">
+                {{ a.dept_name }} · Year {{ a.year_of_study }}
+            </span>
+
+            <span class="message-label">
+                FACULTY UPDATE
+            </span>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <!-- EMPTY STATE -->
+    <div class="empty-messages">
+
+        <div class="empty-icon">📭</div>
+
+        <h3>No Faculty Messages Yet</h3>
+
+        <p>
+            There are currently no announcements for your department
+            and academic year. Please check again later.
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

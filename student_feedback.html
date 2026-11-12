@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="student-dashboard">
+
+    <div class="section-heading">
+        <div>
+            <h2>Student Feedback</h2>
+            <p>Your suggestions help improve campus life.</p>
+        </div>
+    </div>
+
+    <div class="feedback-card">
+
+        {% if success %}
+            <div class="feedback-success">
+                {{ success }}
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="feedback-error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('student_feedback') }}">
+
+            <label for="feedback">Your Feedback</label>
+
+            <textarea
+                id="feedback"
+                name="feedback"
+                rows="7"
+                maxlength="3000"
+                placeholder="Write your suggestions here..."
+                required></textarea>
+
+            <button type="submit" class="feedback-submit">
+                Submit Feedback
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

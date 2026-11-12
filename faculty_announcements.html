@@ -1,0 +1,501 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+.faculty-announcements {
+    padding: 10px 0 30px;
+    color: #172b4d;
+}
+
+.announcement-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px;
+    margin-bottom: 28px;
+    border-radius: 18px;
+    background: linear-gradient(120deg, #142b55, #2456a6);
+    color: white;
+}
+
+.announcement-banner h1 {
+    color: white;
+    font-size: 28px;
+    margin: 12px 0 8px;
+}
+
+.announcement-banner p {
+    color: #dce8ff;
+    margin: 0;
+    font-size: 14px;
+}
+
+.announcement-label {
+    display: inline-block;
+    background: rgba(255,255,255,.14);
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.announcement-banner-icon {
+    width: 78px;
+    height: 78px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.15);
+    font-size: 38px;
+}
+
+.announcement-heading {
+    margin: 28px 0 17px;
+}
+
+.announcement-heading h2 {
+    font-size: 21px;
+    margin: 0 0 6px;
+    font-weight: 800;
+}
+
+.announcement-heading p {
+    color: #7b8799;
+    font-size: 13px;
+    margin: 0;
+}
+
+.announcement-form-card {
+    background: white;
+    border: 1px solid #e8edf5;
+    border-radius: 16px;
+    padding: 27px;
+    box-shadow: 0 4px 15px rgba(20,40,80,.04);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 19px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    color: #34445f;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dce3ed;
+    border-radius: 9px;
+    background: #fbfcfe;
+    color: #26364f;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: .2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #3974cf;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(57,116,207,.10);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 130px;
+}
+
+.publish-button {
+    margin-top: 22px;
+    border: none;
+    border-radius: 9px;
+    background: #2456a6;
+    color: white;
+    padding: 13px 22px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.publish-button:hover {
+    background: #173e7e;
+    transform: translateY(-2px);
+}
+
+.alert-message {
+    padding: 14px 17px;
+    border-radius: 10px;
+    margin-bottom: 17px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.alert-error {
+    background: #fff0f0;
+    border: 1px solid #ffd4d4;
+    color: #c62828;
+}
+
+.alert-success {
+    background: #edfaf3;
+    border: 1px solid #c9efd9;
+    color: #16834a;
+}
+
+.published-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 18px;
+}
+
+.published-card {
+    background: white;
+    border: 1px solid #e8edf5;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 4px 15px rgba(20,40,80,.035);
+    transition: .2s ease;
+    overflow-wrap: anywhere;
+}
+
+.published-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(20,40,80,.07);
+}
+
+.published-card h3 {
+    color: #172b4d;
+    font-size: 16px;
+    margin: 0 0 12px;
+}
+
+.published-card .announcement-message {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    margin-bottom: 18px;
+}
+
+.announcement-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 1px solid #edf0f5;
+    padding-top: 14px;
+}
+
+.announcement-meta p {
+    color: #718096;
+    font-size: 12px;
+    margin: 0;
+}
+
+.announcement-meta strong {
+    color: #34445f;
+}
+
+.announcement-date {
+    color: #929db0;
+    font-size: 11px;
+    margin-top: 15px;
+}
+
+.empty-announcements {
+    grid-column: 1 / -1;
+    background: white;
+    padding: 35px 20px;
+    text-align: center;
+    border: 1px dashed #cbd5e1;
+    border-radius: 14px;
+}
+
+.empty-announcements h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+.empty-announcements p {
+    color: #8290a4;
+    font-size: 13px;
+    margin: 0;
+}
+
+@media(max-width:700px) {
+    .form-grid,
+    .published-list {
+        grid-template-columns: 1fr;
+    }
+
+    .announcement-banner {
+        padding: 24px 20px;
+    }
+
+    .announcement-banner h1 {
+        font-size: 23px;
+    }
+
+    .announcement-banner-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+    }
+
+    .announcement-form-card {
+        padding: 19px;
+    }
+}
+
+@media(max-width:380px) {
+    .announcement-banner-icon {
+        display: none;
+    }
+}
+</style>
+
+<div class="faculty-announcements">
+
+    <!-- HEADER -->
+
+    <section class="announcement-banner">
+        <div>
+            <span class="announcement-label">FACULTY PORTAL</span>
+            <h1>Announcements</h1>
+            <p>Publish academic messages and important updates for students.</p>
+        </div>
+
+        <div class="announcement-banner-icon">📢</div>
+    </section>
+
+
+    <!-- FORM HEADING -->
+
+    <div class="announcement-heading">
+        <h2>Create Announcement</h2>
+        <p>Share academic information with the selected department and year.</p>
+    </div>
+
+
+    <!-- STATUS MESSAGES -->
+
+    {% if error %}
+    <div class="alert-message alert-error">
+        ⚠️ {{ error }}
+    </div>
+    {% endif %}
+
+    {% if success %}
+    <div class="alert-message alert-success">
+        ✓ {{ success }}
+    </div>
+    {% endif %}
+
+
+    <!-- ANNOUNCEMENT FORM -->
+
+    <section class="announcement-form-card">
+
+        <form method="POST"
+              action="{{ url_for('faculty_announcements') }}">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="dept_id">Department</label>
+
+                    <select name="dept_id" id="dept_id" required>
+                        <option value="">Select Department</option>
+
+                        {% for dept in departments %}
+                        <option value="{{ dept.dept_id }}">
+                            {{ dept.dept_name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="year_of_study">Academic Year</label>
+
+                    <select name="year_of_study"
+                            id="year_of_study"
+                            required>
+
+                        <option value="">Select Year</option>
+                        <option value="1">First Year</option>
+                        <option value="2">Second Year</option>
+                        <option value="3">Third Year</option>
+                        <option value="4">Fourth Year</option>
+
+                    </select>
+                </div>
+
+
+                <div class="form-group full-width">
+                    <label for="subject_id">Subject</label>
+
+                    <select name="subject_id" id="subject_id" required>
+
+                        <option value="">Select Subject</option>
+
+                        {% for subject in subjects %}
+                        <option
+                            value="{{ subject.subject_id }}"
+                            data-dept="{{ subject.dept_id }}"
+                        >
+                            {{ subject.subject_code }} -
+                            {{ subject.subject_name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+
+                <div class="form-group full-width">
+                    <label for="title">Announcement Title</label>
+
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        maxlength="200"
+                        placeholder="Enter announcement title"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group full-width">
+                    <label for="message">Announcement Message</label>
+
+                    <textarea
+                        name="message"
+                        id="message"
+                        rows="5"
+                        maxlength="5000"
+                        placeholder="Write your announcement here..."
+                        required
+                    ></textarea>
+                </div>
+
+            </div>
+
+            <button type="submit" class="publish-button">
+                📢 Publish Announcement
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <!-- PUBLISHED ANNOUNCEMENTS -->
+
+    <div class="announcement-heading">
+        <h2>My Published Announcements</h2>
+        <p>View announcements published through your faculty account.</p>
+    </div>
+
+    <section class="published-list">
+
+        {% for announcement in announcements %}
+
+        <article class="published-card">
+
+            <h3>📢 {{ announcement.title }}</h3>
+
+            <p class="announcement-message">
+                {{ announcement.message }}
+            </p>
+
+            <div class="announcement-meta">
+
+                <p>
+                    <strong>Department:</strong>
+                    {{ announcement.dept_name }}
+                </p>
+
+                <p>
+                    <strong>Subject:</strong>
+                    {{ announcement.subject_name }}
+                </p>
+
+                <p>
+                    <strong>Year:</strong>
+                    {{ announcement.year_of_study }}
+                </p>
+
+            </div>
+
+            <div class="announcement-date">
+                Published: {{ announcement.created_at }}
+            </div>
+
+        </article>
+
+        {% else %}
+
+        <div class="empty-announcements">
+            <h3>📭 No Announcements Yet</h3>
+            <p>You have not published any announcements yet.</p>
+        </div>
+
+        {% endfor %}
+
+    </section>
+
+</div>
+
+
+<script>
+const departmentSelect = document.getElementById("dept_id");
+const subjectSelect = document.getElementById("subject_id");
+
+function filterSubjects() {
+
+    const selectedDepartment = departmentSelect.value;
+
+    Array.from(subjectSelect.options).forEach(option => {
+
+        if (!option.value) {
+            option.hidden = false;
+            return;
+        }
+
+        option.hidden =
+            option.dataset.dept !== selectedDepartment;
+    });
+
+    subjectSelect.value = "";
+}
+
+departmentSelect.addEventListener("change", filterSubjects);
+</script>
+
+{% endblock %}

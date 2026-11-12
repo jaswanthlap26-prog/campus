@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Campus Connect | Login</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="login-body">
+
+    <div class="login-container">
+
+        <!-- LEFT SIDE -->
+        <div class="login-left">
+
+            <div class="login-brand">
+                <div class="brand-logo">CC</div>
+                <h2>Campus Connect</h2>
+            </div>
+
+            <div class="login-illustration">
+                <div class="illustration-circle">🎓</div>
+
+                <span class="floating-icon icon-one">📚</span>
+                <span class="floating-icon icon-two">💡</span>
+                <span class="floating-icon icon-three">✨</span>
+            </div>
+
+            <h1>Welcome to Your Campus!</h1>
+
+            <p>
+                One platform connecting students, faculty
+                and campus administration.
+                Learn, communicate and grow together.
+            </p>
+
+            <div class="login-features">
+                <span>✓ Student Community</span>
+                <span>✓ Academic Updates</span>
+                <span>✓ Campus Announcements</span>
+                <span>✓ Events and Opportunities</span>
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="login-right">
+
+            <div class="login-card">
+
+                <div class="login-avatar">👤</div>
+
+                <h2>Welcome Back!</h2>
+
+                <p class="login-subtitle">
+                    Login to your Campus Connect account
+                </p>
+
+                <!-- ERROR MESSAGE -->
+                {% if error %}
+                    <div class="login-error" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                <!-- LOGIN FORM -->
+                <form action="{{ url_for('login') }}" method="POST">
+
+                    <!-- USERNAME -->
+                    <label for="username">Username</label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                        required>
+
+                    <!-- PASSWORD -->
+                    <label for="password">Password</label>
+
+                    <div style="position: relative;">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                            style="padding-right: 65px;">
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            onclick="togglePasswordVisibility()"
+                            style="
+                                position: absolute;
+                                right: 12px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                                border: none;
+                                background: transparent;
+                                color: #7564d7;
+                                font-size: 11px;
+                                font-weight: 700;
+                                cursor: pointer;
+                            ">
+                            Show
+                        </button>
+                    </div>
+
+                    <!-- ROLE -->
+                    <label for="role">Login As</label>
+
+                    <select id="role" name="role" required>
+
+                        <option value="">Select your role</option>
+                        <option value="STUDENT">Student</option>
+                        <option value="FACULTY">Faculty</option>
+                        <option value="HOD">Head of Department</option>
+                        <option value="OPERATOR">Operator</option>
+                        <option value="SUPER_ADMIN">Super Admin</option>
+
+                    </select>
+
+                    <!-- LOGIN BUTTON -->
+                    <button type="submit" class="login-button">
+                        Login to Campus Connect →
+                    </button>
+
+                </form>
+
+                <!-- FOOTER -->
+                <div class="login-footer">
+                    <p>Campus Connect</p>
+                    <p>Secure Campus Management Portal</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PASSWORD VISIBILITY -->
+    <script>
+        function togglePasswordVisibility() {
+
+            const password =
+                document.getElementById("password");
+
+            const button =
+                document.getElementById("togglePassword");
+
+            if (password.type === "password") {
+                password.type = "text";
+                button.textContent = "Hide";
+            } else {
+                password.type = "password";
+                button.textContent = "Show";
+            }
+        }
+    </script>
+
+</body>
+</html>

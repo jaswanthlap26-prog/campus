@@ -1,0 +1,85 @@
+ 
+{% extends "base.html" %}
+
+{% block content %}
+
+{% set student_name = student.get('student_name') or student.get('full_name') or student.get('name') or session.get('username', 'Student') %}
+{% set student_id = student.get('student_id') or session.get('student_id') or 'Not available' %}
+{% set roll_number = student.get('roll_number') or 'Not added' %}
+{% set department = student.get('department') or student.get('branch') or student.get('department_name') or 'Not added' %}
+{% set year = student.get('year') or student.get('academic_year') or student.get('study_year') or 'Not added' %}
+{% set email = student.get('email') or student.get('email_id') or 'Not added' %}
+{% set phone = student.get('phone') or student.get('phone_number') or 'Not added' %}
+
+<div class="student-dashboard">
+
+    <div class="section-heading">
+        <div>
+            <h2>My Profile</h2>
+            <p>View your personal and academic information.</p>
+        </div>
+        <a href="{{ url_for('dashboard') }}" class="text-link">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <section class="student-profile-card">
+
+        <div class="profile-main">
+            <div class="profile-avatar">👨🏻‍🎓</div>
+
+            <div class="profile-identity">
+                <h2>{{ student_name }}</h2>
+                <p>Campus Connect Student</p>
+                <span class="profile-id">
+                    Student ID: {{ student_id }}
+                </span>
+            </div>
+        </div>
+
+        <div class="profile-details">
+
+            <div class="profile-detail">
+                <span class="detail-label">Roll Number</span>
+                <strong>{{ roll_number }}</strong>
+            </div>
+
+            <div class="profile-detail">
+                <span class="detail-label">Department</span>
+                <strong>{{ department }}</strong>
+            </div>
+
+            <div class="profile-detail">
+                <span class="detail-label">Academic Year</span>
+                <strong>{{ year }}</strong>
+            </div>
+
+            <div class="profile-detail">
+                <span class="detail-label">Email Address</span>
+                <strong>{{ email }}</strong>
+            </div>
+
+            <div class="profile-detail">
+                <span class="detail-label">Phone Number</span>
+                <strong>{{ phone }}</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="student-message">
+        <div class="message-icon">🔒</div>
+        <div>
+            <h3>Profile Information</h3>
+            <p>
+                Your profile details are displayed from your registered
+                student record. If any information is missing or incorrect,
+                please contact your campus administrator.
+            </p>
+        </div>
+    </section>
+
+</div>
+
+{% endblock %}

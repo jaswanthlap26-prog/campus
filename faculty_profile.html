@@ -1,0 +1,219 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+.faculty-profile {
+    color: #172b4d;
+    padding: 10px 0 30px;
+}
+
+.profile-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px;
+    margin-bottom: 28px;
+    border-radius: 18px;
+    color: white;
+    background: linear-gradient(120deg, #142b55, #2456a6);
+}
+
+.profile-banner h1 {
+    color: white;
+    font-size: 28px;
+    margin: 12px 0 8px;
+}
+
+.profile-banner p {
+    color: #dce8ff;
+    margin: 0;
+    font-size: 14px;
+}
+
+.profile-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    background: rgba(255,255,255,.14);
+    padding: 7px 12px;
+    border-radius: 20px;
+}
+
+.profile-avatar {
+    width: 82px;
+    height: 82px;
+    border-radius: 22px;
+    background: rgba(255,255,255,.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+}
+
+.profile-heading {
+    margin: 28px 0 18px;
+}
+
+.profile-heading h2 {
+    font-size: 21px;
+    margin: 0 0 6px;
+    font-weight: 800;
+}
+
+.profile-heading p {
+    font-size: 13px;
+    color: #7b8799;
+    margin: 0;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.profile-item {
+    background: white;
+    padding: 22px;
+    border: 1px solid #e8edf5;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(20,40,80,.035);
+    transition: .2s ease;
+}
+
+.profile-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 22px rgba(20,40,80,.07);
+}
+
+.profile-item span {
+    display: block;
+    color: #8491a5;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.profile-item h3 {
+    margin: 0;
+    color: #172b4d;
+    font-size: 16px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.profile-item .profile-icon {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    background: #edf3ff;
+    border-radius: 10px;
+    margin-bottom: 13px;
+    font-size: 18px;
+}
+
+@media(max-width:650px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-banner {
+        padding: 24px 20px;
+    }
+
+    .profile-banner h1 {
+        font-size: 23px;
+    }
+
+    .profile-avatar {
+        width: 62px;
+        height: 62px;
+        font-size: 32px;
+    }
+}
+
+@media(max-width:380px) {
+    .profile-avatar {
+        display: none;
+    }
+}
+</style>
+
+<div class="faculty-profile">
+
+    <section class="profile-banner">
+        <div>
+            <span class="profile-label">FACULTY PORTAL</span>
+            <h1>My Profile</h1>
+            <p>View your registered faculty information and account details.</p>
+        </div>
+
+        <div class="profile-avatar">👨‍🏫</div>
+    </section>
+
+    <div class="profile-heading">
+        <h2>Personal Information</h2>
+        <p>Your official faculty account information.</p>
+    </div>
+
+    <section class="profile-grid">
+
+        <div class="profile-item">
+            <div class="profile-icon">👤</div>
+            <span>Faculty Name</span>
+            <h3>{{ faculty.faculty_name or 'Not provided' }}</h3>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-icon">🪪</div>
+            <span>Faculty Code</span>
+            <h3>{{ faculty.faculty_code or 'Not provided' }}</h3>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-icon">🔢</div>
+            <span>Faculty Number</span>
+            <h3>{{ faculty.faculty_no or 'Not provided' }}</h3>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-icon">🏛️</div>
+            <span>Department</span>
+            <h3>{{ faculty.department or 'Not assigned' }}</h3>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-icon">💼</div>
+            <span>Designation</span>
+            <h3>{{ faculty.designation or 'Not provided' }}</h3>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-icon">🎓</div>
+            <span>Degrees / Qualifications</span>
+            <h3>{{ faculty.degrees or 'Not provided' }}</h3>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-icon">📱</div>
+            <span>Mobile Number</span>
+            <h3>{{ faculty.mobile_number or 'Not provided' }}</h3>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-icon">✉️</div>
+            <span>Email Address</span>
+            <h3>{{ faculty.email or 'Not provided' }}</h3>
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

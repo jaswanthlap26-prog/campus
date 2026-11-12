@@ -1,0 +1,286 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Attendance | Campus Connect{% endblock %}
+
+{% block content %}
+
+<style>
+.attendance-page {
+    padding: 20px 0 40px;
+}
+
+.attendance-heading {
+    margin-bottom: 25px;
+}
+
+.attendance-heading h1 {
+    color: #ffffff;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.attendance-heading p {
+    color: #aebbd0;
+    margin: 0;
+}
+
+.attendance-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.attendance-card {
+    background: rgba(20, 35, 60, 0.85);
+    border: 1px solid rgba(150, 180, 220, 0.18);
+    border-radius: 16px;
+    padding: 22px;
+}
+
+.attendance-card small {
+    color: #aebbd0;
+    font-size: 13px;
+}
+
+.attendance-card h2 {
+    color: #ffffff;
+    font-size: 29px;
+    margin: 12px 0 0;
+}
+
+.attendance-section {
+    background: rgba(20, 35, 60, 0.75);
+    border: 1px solid rgba(150, 180, 220, 0.18);
+    border-radius: 16px;
+    padding: 22px;
+}
+
+.attendance-section h2 {
+    color: #ffffff;
+    margin: 0 0 20px;
+    font-size: 21px;
+}
+
+.attendance-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.attendance-table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+}
+
+.attendance-table th {
+    color: #a9caff;
+    text-align: left;
+    padding: 15px 12px;
+    background: rgba(60, 90, 140, 0.20);
+    border-bottom: 1px solid rgba(150, 180, 220, 0.18);
+}
+
+.attendance-table td {
+    color: #e3ebfa;
+    padding: 16px 12px;
+    border-bottom: 1px solid rgba(150, 180, 220, 0.12);
+}
+
+.attendance-table tr:last-child td {
+    border-bottom: none;
+}
+
+.subject-code {
+    color: #a9caff;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+.attendance-progress {
+    width: 130px;
+    height: 8px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 7px;
+}
+
+.attendance-progress-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 20px;
+    transition: width 0.5s ease;
+}
+
+.attendance-percentage {
+    font-weight: bold;
+}
+
+.attendance-empty {
+    color: #aebbd0;
+    text-align: center;
+    padding: 35px 15px;
+}
+
+.attendance-note {
+    color: #aebbd0;
+    font-size: 13px;
+    margin-top: 18px;
+}
+
+@media(max-width: 700px) {
+    .attendance-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .attendance-heading h1 {
+        font-size: 25px;
+    }
+
+    .attendance-section {
+        padding: 15px;
+    }
+}
+</style>
+
+<div class="attendance-page">
+
+    <div class="attendance-heading">
+        <h1>My Attendance</h1>
+        <p>View your subject-wise attendance and overall academic attendance.</p>
+    </div>
+
+    <div class="attendance-summary">
+
+        <div class="attendance-card">
+            <small>Overall Attendance</small>
+            <h2>{{ overall_percentage }}%</h2>
+        </div>
+
+        <div class="attendance-card">
+            <small>Classes Attended</small>
+            <h2>{{ total_present }}</h2>
+        </div>
+
+        <div class="attendance-card">
+            <small>Total Classes</small>
+            <h2>{{ total_classes }}</h2>
+        </div>
+
+    </div>
+
+    <div class="attendance-section">
+
+        <h2>Subject-wise Attendance</h2>
+
+        {% if subjects %}
+
+        <div class="attendance-table-wrap">
+
+            <table class="attendance-table">
+
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Attended</th>
+                        <th>Total Classes</th>
+                        <th>Attendance</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for subject in subjects %}
+
+                    <tr>
+
+                        <td>
+                            <strong>{{ subject.subject_name }}</strong>
+                            <span class="subject-code">
+                                {{ subject.subject_code }}
+                            </span>
+                        </td>
+
+                        <td>{{ subject.attended_classes }}</td>
+
+                        <td>{{ subject.total_classes }}</td>
+
+                        <td>
+                            <span class="attendance-percentage"
+                                  data-percentage="{{ subject.percentage }}">
+                                {{ subject.percentage }}%
+                            </span>
+
+                            <div class="attendance-progress">
+                                <div class="attendance-progress-bar"
+                                     data-percentage="{{ subject.percentage }}">
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="attendance-empty">
+            <h3>No Subjects Available</h3>
+            <p>No subjects have been added for your department yet.</p>
+        </div>
+
+        {% endif %}
+
+        <p class="attendance-note">
+            Note: This page is view-only. Attendance figures are displayed
+            from the student attendance records available in the system.
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".attendance-progress-bar").forEach(function (bar) {
+
+        let percentage = parseFloat(bar.dataset.percentage) || 0;
+
+        percentage = Math.max(0, Math.min(100, percentage));
+
+        bar.style.width = percentage + "%";
+
+        if (percentage >= 75) {
+            bar.style.backgroundColor = "#16a36a";
+        } else {
+            bar.style.backgroundColor = "#dc5555";
+        }
+
+    });
+
+    document.querySelectorAll(".attendance-percentage").forEach(function (item) {
+
+        let percentage = parseFloat(item.dataset.percentage) || 0;
+
+        if (percentage >= 75) {
+            item.style.color = "#16a36a";
+        } else {
+            item.style.color = "#dc5555";
+        }
+
+    });
+
+});
+</script>
+
+{% endblock %}

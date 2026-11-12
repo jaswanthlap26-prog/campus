@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <style>
+        *{box-sizing:border-box}
+        body{font-family:Arial,sans-serif;background:#f4f6fb;padding:30px;color:#1e293b}
+        .container{max-width:750px;margin:auto;background:white;padding:30px;border-radius:12px}
+        a{color:#2563eb;text-decoration:none}
+        h1{margin:18px 0}
+        .grid{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+        label{display:block;font-weight:bold;margin-bottom:7px}
+        input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:7px}
+        .field{margin-bottom:17px}
+        button{background:#2563eb;color:white;border:0;padding:13px 22px;border-radius:7px;cursor:pointer}
+        .error{color:#dc2626;margin-bottom:15px}
+        @media(max-width:600px){.grid{grid-template-columns:1fr}body{padding:12px}}
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="{{ url_for('operator_faculty') }}">← Back to Faculty</a>
+    <h1>{% if faculty.get('faculty_id') %}Edit Faculty{% else %}Add Faculty{% endif %}</h1>
+
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+    <form method="POST">
+        <div class="grid">
+            <div class="field">
+                <label>Faculty Code *</label>
+                <input name="faculty_code" required value="{{ request.form.get('faculty_code', faculty.get('faculty_code', '')) }}">
+            </div>
+            <div class="field">
+                <label>Faculty Number *</label>
+                <input type="number" name="faculty_no" required value="{{ request.form.get('faculty_no', faculty.get('faculty_no', '')) }}">
+            </div>
+            <div class="field">
+                <label>Faculty Name *</label>
+                <input name="faculty_name" required value="{{ request.form.get('faculty_name', faculty.get('faculty_name', '')) }}">
+            </div>
+            <div class="field">
+                <label>Department *</label>
+                <select name="dept_id" required>
+                    <option value="">Select Department</option>
+                    {% for d in departments %}
+                    <option value="{{ d.dept_id }}" {% if request.form.get('dept_id', faculty.get('dept_id', '')|string) == d.dept_id|string %}selected{% endif %}>
+                        {{ d.dept_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="field">
+                <label>Designation *</label>
+                <input name="designation" required value="{{ request.form.get('designation', faculty.get('designation', '')) }}">
+            </div>
+            <div class="field">
+                <label>Degrees</label>
+                <input name="degrees" value="{{ request.form.get('degrees', faculty.get('degrees', '')) }}">
+            </div>
+            <div class="field">
+                <label>Mobile Number</label>
+                <input name="mobile_number" value="{{ request.form.get('mobile_number', faculty.get('mobile_number', '')) }}">
+            </div>
+            <div class="field">
+                <label>Email *</label>
+                <input type="email" name="email" required value="{{ request.form.get('email', faculty.get('email', '')) }}">
+            </div>
+        </div>
+        <button type="submit">Save Faculty</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,586 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+/* FACULTY STUDENTS DIRECTORY */
+
+.faculty-students {
+    padding: 10px 0 30px;
+    color: #172b4d;
+}
+
+/* HEADER */
+
+.students-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px;
+    margin-bottom: 28px;
+    border-radius: 18px;
+    background: linear-gradient(120deg, #142b55, #2456a6);
+    color: white;
+}
+
+.students-banner h1 {
+    color: white;
+    font-size: 28px;
+    margin: 12px 0 8px;
+}
+
+.students-banner p {
+    color: #dce8ff;
+    font-size: 14px;
+    margin: 0;
+}
+
+.students-label {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.14);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.students-banner-icon {
+    width: 78px;
+    height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: rgba(255,255,255,.15);
+    font-size: 38px;
+}
+
+/* HEADINGS */
+
+.students-heading {
+    margin: 28px 0 17px;
+}
+
+.students-heading h2 {
+    font-size: 21px;
+    font-weight: 800;
+    margin: 0 0 6px;
+}
+
+.students-heading p {
+    color: #7b8799;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* SEARCH */
+
+.student-search-card {
+    background: white;
+    border: 1px solid #e8edf5;
+    border-radius: 15px;
+    padding: 23px;
+    box-shadow: 0 4px 15px rgba(20,40,80,.035);
+}
+
+.student-search-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.search-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.search-field label {
+    color: #34445f;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.search-field input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #dce3ed;
+    border-radius: 9px;
+    background: #fbfcfe;
+    font-family: inherit;
+    font-size: 13px;
+    color: #26364f;
+    outline: none;
+    transition: .2s ease;
+}
+
+.search-field input:focus {
+    border-color: #3974cf;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(57,116,207,.10);
+}
+
+.search-button {
+    padding: 13px 22px;
+    background: #2456a6;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.search-button:hover {
+    background: #173e7e;
+}
+
+.clear-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 18px;
+    border: 1px solid #dce3ed;
+    border-radius: 9px;
+    background: white;
+    color: #53647d;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+.clear-button:hover {
+    background: #f3f6fb;
+    border-color: #b9c7da;
+}
+
+/* SUMMARY */
+
+.students-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin: 27px 0 16px;
+}
+
+.summary-title h2 {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0 0 5px;
+}
+
+.summary-title p {
+    color: #7b8799;
+    font-size: 12px;
+    margin: 0;
+}
+
+.student-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 16px;
+    border-radius: 10px;
+    background: #eaf1ff;
+    color: #2456a6;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.student-count strong {
+    font-size: 17px;
+}
+
+/* TABLE */
+
+.student-table-card {
+    background: white;
+    border: 1px solid #e8edf5;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(20,40,80,.035);
+}
+
+.student-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.student-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.student-table thead {
+    background: #f5f8fd;
+}
+
+.student-table th {
+    padding: 16px 17px;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    border-bottom: 1px solid #e8edf5;
+    white-space: nowrap;
+}
+
+.student-table td {
+    padding: 16px 17px;
+    color: #52627a;
+    font-size: 12px;
+    border-bottom: 1px solid #edf0f5;
+    white-space: nowrap;
+}
+
+.student-table tbody tr {
+    transition: .2s ease;
+}
+
+.student-table tbody tr:hover {
+    background: #f8faff;
+}
+
+.student-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* STUDENT NAME */
+
+.student-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: #263957;
+    font-weight: 700;
+}
+
+.student-avatar {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: #eaf1ff;
+    color: #2456a6;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* BADGES */
+
+.student-code {
+    padding: 6px 9px;
+    border-radius: 6px;
+    background: #f1f4f9;
+    color: #53647d;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.section-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 7px;
+    background: #f0ebff;
+    color: #7050b5;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.year-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 7px;
+    background: #e7f8f1;
+    color: #16834a;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.semester-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 7px;
+    background: #fff2e5;
+    color: #b76b19;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* EMPTY STATE */
+
+.students-empty {
+    text-align: center;
+    padding: 48px 20px;
+}
+
+.students-empty-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.students-empty h3 {
+    color: #34445f;
+    font-size: 17px;
+    margin: 0 0 8px;
+}
+
+.students-empty p {
+    color: #8290a4;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:650px) {
+    .students-banner {
+        padding: 24px 20px;
+    }
+
+    .students-banner h1 {
+        font-size: 23px;
+    }
+
+    .students-banner-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+    }
+
+    .student-search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-button,
+    .clear-button {
+        width: 100%;
+    }
+
+    .students-summary {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .student-search-card {
+        padding: 18px;
+    }
+}
+
+@media(max-width:380px) {
+    .students-banner-icon {
+        display: none;
+    }
+}
+</style>
+
+
+<div class="faculty-students">
+
+    <!-- HEADER -->
+
+    <section class="students-banner">
+
+        <div>
+            <span class="students-label">FACULTY PORTAL</span>
+
+            <h1>Student Directory</h1>
+
+            <p>
+                View and search students belonging to your department.
+            </p>
+        </div>
+
+        <div class="students-banner-icon">
+            👨‍🎓
+        </div>
+
+    </section>
+
+
+    <!-- DEPARTMENT INFORMATION -->
+
+    <div class="students-heading">
+        <h2>Department Students</h2>
+
+        <p>
+            Department:
+            <strong>{{ faculty.department or 'Not assigned' }}</strong>
+        </p>
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <section class="student-search-card">
+
+        <form method="GET"
+              action="{{ url_for('faculty_students') }}"
+              class="student-search-form">
+
+            <div class="search-field">
+
+                <label for="q">Search Students</label>
+
+                <input
+                    type="text"
+                    id="q"
+                    name="q"
+                    value="{{ search }}"
+                    placeholder="Search by name, roll number or student code"
+                >
+
+            </div>
+
+            <button type="submit" class="search-button">
+                🔍 Search
+            </button>
+
+            <a href="{{ url_for('faculty_students') }}"
+               class="clear-button">
+                Clear
+            </a>
+
+        </form>
+
+    </section>
+
+
+    <!-- STUDENT RECORDS -->
+
+    <section>
+
+        <div class="students-summary">
+
+            <div class="summary-title">
+                <h2>Student Records</h2>
+                <p>Students registered in your department.</p>
+            </div>
+
+            <div class="student-count">
+                👨‍🎓
+                <strong>{{ students|length }}</strong>
+                Students Found
+            </div>
+
+        </div>
+
+
+        <div class="student-table-card">
+
+            {% if students %}
+
+            <div class="student-table-wrapper">
+
+                <table class="student-table">
+
+                    <thead>
+                        <tr>
+                            <th>Roll Number</th>
+                            <th>Student Name</th>
+                            <th>Student Code</th>
+                            <th>Section</th>
+                            <th>Year</th>
+                            <th>Semester</th>
+                            <th>Mobile Number</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for student in students %}
+
+                        <tr>
+
+                            <td>
+                                <strong>{{ student.roll_number }}</strong>
+                            </td>
+
+                            <td>
+                                <div class="student-name-cell">
+
+                                    <div class="student-avatar">
+                                        {{ student.student_name[:1]|upper }}
+                                    </div>
+
+                                    {{ student.student_name }}
+
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="student-code">
+                                    {{ student.student_code }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="section-badge">
+                                    {{ student.section_name or '-' }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="year-badge">
+                                    Year {{ student.year_of_study }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="semester-badge">
+                                    Sem {{ student.semester }}
+                                </span>
+                            </td>
+
+                            <td>
+                                {{ student.mobile_number or '-' }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="students-empty">
+
+                <div class="students-empty-icon">🔍</div>
+
+                <h3>No Students Found</h3>
+
+                <p>
+                    No students match your search.
+                    Try another name, roll number or student code.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

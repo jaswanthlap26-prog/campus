@@ -1,0 +1,484 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <div class="profile-heading">
+        <div>
+            <span class="profile-eyebrow">CAMPUS CONNECT / STUDENT</span>
+            <h1>My Profile</h1>
+            <p>Manage and view your academic identity.</p>
+        </div>
+        <div class="profile-heading-icon">◉</div>
+    </div>
+
+    <!-- STUDENT IDENTITY CARD -->
+
+    <section class="identity-card">
+
+        <div class="identity-main">
+
+            <div class="student-avatar">
+                {{ (student.student_name or 'S')[0]|upper }}
+            </div>
+
+            <div class="identity-details">
+                <span class="identity-label">STUDENT PROFILE</span>
+
+                <h2>{{ student.student_name or 'Student Name' }}</h2>
+
+                <p>{{ student.student_code or 'Student Code Not Available' }}</p>
+
+                <span class="student-role">● ACTIVE STUDENT</span>
+            </div>
+
+        </div>
+
+        <div class="identity-divider"></div>
+
+        <div class="identity-stats">
+
+            <div>
+                <small>STUDENT ID</small>
+                <strong>{{ student.student_id or '-' }}</strong>
+            </div>
+
+            <div>
+                <small>ROLL NUMBER</small>
+                <strong>{{ student.roll_number or '-' }}</strong>
+            </div>
+
+            <div>
+                <small>DEPARTMENT</small>
+                <strong>{{ student.department or '-' }}</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ACADEMIC DETAILS -->
+
+    <section class="profile-section">
+
+        <div class="section-heading">
+            <div class="section-icon academic-icon">▤</div>
+            <div>
+                <h2>Academic Information</h2>
+                <p>Your academic and course details</p>
+            </div>
+        </div>
+
+        <div class="profile-details-grid">
+
+            <div class="detail-card">
+                <span>🎓</span>
+                <div>
+                    <small>Department ID</small>
+                    <strong>{{ student.dept_id or '-' }}</strong>
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <span>🏫</span>
+                <div>
+                    <small>Department</small>
+                    <strong>{{ student.department or '-' }}</strong>
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <span>📚</span>
+                <div>
+                    <small>Year of Study</small>
+                    <strong>{{ student.year or '-' }}</strong>
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <span>📖</span>
+                <div>
+                    <small>Semester</small>
+                    <strong>{{ student.semester or '-' }}</strong>
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <span>👥</span>
+                <div>
+                    <small>Section ID</small>
+                    <strong>{{ student.section_id or '-' }}</strong>
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <span>🔖</span>
+                <div>
+                    <small>Roll Number</small>
+                    <strong>{{ student.roll_number or '-' }}</strong>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- PERSONAL DETAILS -->
+
+    <section class="profile-section">
+
+        <div class="section-heading">
+            <div class="section-icon personal-icon">♙</div>
+            <div>
+                <h2>Personal Information</h2>
+                <p>Your registered contact details</p>
+            </div>
+        </div>
+
+        <div class="contact-card">
+
+            <div class="contact-row">
+                <div class="contact-icon">✉</div>
+                <div>
+                    <small>Email Address</small>
+                    <strong>{{ student.email or 'Not provided' }}</strong>
+                </div>
+            </div>
+
+            <div class="contact-row">
+                <div class="contact-icon">☎</div>
+                <div>
+                    <small>Mobile Number</small>
+                    <strong>{{ student.mobile_number or student.phone or 'Not provided' }}</strong>
+                </div>
+            </div>
+
+            <div class="contact-row">
+                <div class="contact-icon">🪪</div>
+                <div>
+                    <small>Student Code</small>
+                    <strong>{{ student.student_code or 'Not available' }}</strong>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="profile-note">
+        <span>🔒</span>
+        <p>Your profile information is retrieved from your registered Campus Connect student account.</p>
+    </div>
+
+</div>
+
+<style>
+
+.profile-page {
+    padding: 28px;
+    max-width: 1150px;
+    margin: auto;
+    color: #1e293b;
+}
+
+.profile-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.profile-eyebrow {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: #2563eb;
+    font-weight: 700;
+}
+
+.profile-heading h1 {
+    margin: 7px 0;
+    font-size: 28px;
+    color: #172554;
+}
+
+.profile-heading p {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.profile-heading-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 25px;
+}
+
+/* IDENTITY CARD */
+
+.identity-card {
+    background: linear-gradient(120deg, #172554, #1e40af);
+    border-radius: 18px;
+    padding: 28px;
+    color: white;
+    margin-bottom: 28px;
+    box-shadow: 0 10px 25px rgba(30,64,175,.13);
+}
+
+.identity-main {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.student-avatar {
+    width: 92px;
+    height: 92px;
+    min-width: 92px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #1e3a8a;
+    border: 5px solid rgba(255,255,255,.3);
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.identity-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #bfdbfe;
+    font-weight: 700;
+}
+
+.identity-details h2 {
+    font-size: 24px;
+    margin: 7px 0;
+    color: white;
+}
+
+.identity-details p {
+    margin: 0 0 10px;
+    color: #dbeafe;
+    font-size: 14px;
+}
+
+.student-role {
+    display: inline-block;
+    font-size: 10px;
+    color: #bbf7d0;
+    background: rgba(22,163,74,.2);
+    border-radius: 20px;
+    padding: 6px 11px;
+    font-weight: 700;
+}
+
+.identity-divider {
+    height: 1px;
+    background: rgba(255,255,255,.2);
+    margin: 24px 0;
+}
+
+.identity-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.identity-stats small {
+    display: block;
+    color: #bfdbfe;
+    font-size: 10px;
+    margin-bottom: 7px;
+    letter-spacing: 1px;
+}
+
+.identity-stats strong {
+    color: white;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+/* SECTIONS */
+
+.profile-section {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 15px;
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 3px 12px rgba(15,23,42,.03);
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 22px;
+}
+
+.section-icon {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    font-size: 21px;
+}
+
+.academic-icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.personal-icon {
+    background: #f5f3ff;
+    color: #7c3aed;
+}
+
+.section-heading h2 {
+    font-size: 17px;
+    margin: 0 0 5px;
+    color: #1e293b;
+}
+
+.section-heading p {
+    font-size: 12px;
+    margin: 0;
+    color: #94a3b8;
+}
+
+/* ACADEMIC GRID */
+
+.profile-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.detail-card {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: #f8fafc;
+    border: 1px solid #eef2f7;
+    padding: 16px;
+    border-radius: 11px;
+    min-width: 0;
+}
+
+.detail-card > span {
+    font-size: 21px;
+}
+
+.detail-card small,
+.contact-row small {
+    display: block;
+    color: #94a3b8;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.detail-card strong,
+.contact-row strong {
+    display: block;
+    color: #334155;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+/* CONTACT DETAILS */
+
+.contact-card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.contact-row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px;
+    border-bottom: 1px solid #f1f5f9;
+    min-width: 0;
+}
+
+.contact-icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    color: #475569;
+    font-size: 19px;
+}
+
+.profile-note {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    border-radius: 11px;
+    background: #eff6ff;
+    color: #1e40af;
+    font-size: 12px;
+}
+
+.profile-note p {
+    margin: 0;
+}
+
+@media(max-width:800px) {
+    .profile-details-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width:550px) {
+    .profile-page {
+        padding: 15px;
+    }
+
+    .identity-card {
+        padding: 20px;
+    }
+
+    .student-avatar {
+        width: 70px;
+        height: 70px;
+        min-width: 70px;
+        font-size: 29px;
+    }
+
+    .identity-details h2 {
+        font-size: 19px;
+    }
+
+    .identity-stats {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .profile-details-grid,
+    .contact-card {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-section {
+        padding: 17px;
+    }
+}
+
+</style>
+
+{% endblock %}

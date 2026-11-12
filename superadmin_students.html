@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Connect | Students</title>
+    <style>
+        *{box-sizing:border-box}
+        body{font-family:Arial,sans-serif;background:#f3f6fb;color:#172033;margin:0;padding:30px}
+        .container{max-width:1250px;margin:auto}
+        .header{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+        h1{margin-bottom:5px}
+        .muted{color:#718096}
+        .panel{background:white;padding:22px;border-radius:12px;margin-top:22px;box-shadow:0 4px 18px #1428500d}
+        input{padding:11px;border:1px solid #d5dce8;border-radius:7px;width:min(320px,100%)}
+        button,.back{padding:11px 16px;border:0;border-radius:7px;background:#2563eb;color:white;text-decoration:none;cursor:pointer}
+        .table-wrap{overflow-x:auto;margin-top:20px}
+        table{width:100%;border-collapse:collapse;min-width:850px}
+        th,td{text-align:left;padding:13px;border-bottom:1px solid #e8edf5;font-size:13px}
+        th{background:#eff6ff;color:#1e3a8a}
+        @media(max-width:600px){body{padding:15px}}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>Student Records</h1>
+            <p class="muted">Super Admin | Total records: {{ total }}</p>
+        </div>
+        <a class="back" href="{{ url_for('superadmin_dashboard') }}">← Dashboard</a>
+    </div>
+
+    <div class="panel">
+        <form method="GET">
+            <input type="text" name="q" value="{{ search }}"
+                   placeholder="Search name, roll number, code or department">
+            <button type="submit">Search</button>
+            <a href="{{ url_for('superadmin_students') }}">Clear</a>
+        </form>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student Code</th>
+                        <th>Roll Number</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Year</th>
+                        <th>Semester</th>
+                        <th>Section</th>
+                        <th>Mobile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in students %}
+                    <tr>
+                        <td>{{ s.student_id }}</td>
+                        <td>{{ s.student_code or '-' }}</td>
+                        <td>{{ s.roll_number or '-' }}</td>
+                        <td>{{ s.student_name }}</td>
+                        <td>{{ s.dept_name or '-' }}</td>
+                        <td>{{ s.year_of_study or '-' }}</td>
+                        <td>{{ s.semester or '-' }}</td>
+                        <td>{{ s.section_name or '-' }}</td>
+                        <td>{{ s.mobile_number or '-' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="9">No student records found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
